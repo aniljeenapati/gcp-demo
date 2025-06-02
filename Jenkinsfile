@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    GOOGLE_CREDENTIALS = credentials('gcp-sa')
+    GCP_CREDS = credentials('gcp-sa')
   }
 
   stages {
@@ -15,11 +15,8 @@ pipeline {
     stage('Terraform Plan') {
       steps {
         sh '''
-        terraform plan -var="project_id=my-gcp-project" \
-                       -var="region=us-central1" \
-                       -var="zone=us-central1-a" \
-                       -var="service_account_key=$GOOGLE_CREDENTIALS" \
-                       -var="app_repo_url=https://github.com/aniljeenapati/demo-repo.git"
+        echo "$GCP_CREDS" > gcp-key.json
+        terraform plan
         '''
       }
     }
@@ -27,11 +24,8 @@ pipeline {
     stage('Terraform Apply') {
       steps {
         sh '''
-        terraform apply -auto-approve -var="project_id=my-gcp-project" \
-                                        -var="region=us-central1" \
-                                        -var="zone=us-central1-a" \
-                                        -var="service_account_key=$GOOGLE_CREDENTIALS" \
-                                        -var="app_repo_url=https://github.com/aniljeenapati/demo-repo.git"
+        echo "$GCP_CREDS" > gcp-key.json
+        terraform apply -auto-approve
         '''
       }
     }
