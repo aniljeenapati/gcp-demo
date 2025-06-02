@@ -1,10 +1,23 @@
-variable "project_id" {}
-variable "region" {}
-variable "zone" {}
-variable "service_account_key" {}
-variable "instance_template_name" { default = "flask-template" }
-variable "instance_group_name"    { default = "flask-mig" }
-variable "machine_type"           { default = "e2-medium" }
-variable "image_family"           { default = "debian-11" }
-variable "image_project"          { default = "debian-cloud" }
-variable "app_repo_url"           {}
+variable "project_id" {
+  type        = string
+  description = "GCP project ID"
+  default     = "anil-461717"
+}
+
+variable "region" {
+  type        = string
+  description = "GCP region"
+  default     = "us-central1"
+}
+
+variable "zone" {
+  type        = string
+  description = "GCP zone"
+  default     = "us-central1-a"
+}
+
+variable "app_repo_url" {
+  type        = string
+  description = "GitHub URL of the Flask app"
+  default     = "https://github.com/aniljeenapati/gcp-demo.git"
+}
