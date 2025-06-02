@@ -32,7 +32,7 @@ resource "google_compute_instance_template" "default" {
 }
 
 resource "google_compute_instance_group_manager" "default" {
-  name               = var.instance_group_name
+  name               = "flask-gm"
   base_instance_name = "flask-app"
   region             = var.region
   version {
