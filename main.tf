@@ -4,8 +4,9 @@ provider "google" {
 }
 
 resource "google_compute_instance_template" "default" {
-  name_prefix  = var.instance_template_name
-  machine_type = var.machine_type
+  name_prefix  = "py-temp"
+  machine_type = "e2-medium"
+
 
   disk {
     auto_delete  = true
