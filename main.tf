@@ -3,11 +3,6 @@ provider "google" {
   region      = var.region
 }
 
-data "google_compute_image" "debian" {
-  family  = var.image_family
-  project = var.image_project
-}
-
 resource "google_compute_instance_template" "default" {
   name_prefix  = var.instance_template_name
   machine_type = var.machine_type
@@ -15,7 +10,7 @@ resource "google_compute_instance_template" "default" {
   disk {
     auto_delete  = true
     boot         = true
-    source_image = data.google_compute_image.debian.self_link
+    source_image = "projects/debian-cloud/global/images/family/debian-11"
   }
 
   network_interface {
