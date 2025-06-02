@@ -2,32 +2,17 @@ pipeline {
   agent any
 
   environment {
-    GCP_CREDS = credentials('gcp-sa')
+    GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-sa')
   }
 
   stages {
-    stage('Terraform Init') {
-      steps {
-        sh 'terraform init'
-      }
-    }
-
-    stage('Terraform Plan') {
-      steps {
-        sh '''
-        echo "$GCP_CREDS" > gcp-key.json
-        terraform plan
-        '''
-      }
-    }
-
-    stage('Terraform Apply') {
-      steps {
-        sh '''
-        echo "$GCP_CREDS" > gcp-key.json
-        terraform apply -auto-approve
-        '''
-      }
-    }
+            stage('Terraform Init & Apply') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-sa', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
   }
 }
