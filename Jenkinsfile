@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    GOOGLE_CREDENTIALS = credentials('gcp-service-account')
+    GOOGLE_CREDENTIALS = credentials('gcp-sa')
   }
 
   stages {
