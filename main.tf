@@ -1,12 +1,12 @@
 provider "google" {
-  project     = var.project_id
-  region      = var.region
+  project = var.project_id
+  region  = var.region
+  zone    = var.zone
 }
 
 resource "google_compute_instance_template" "default" {
   name_prefix  = "py-temp"
   machine_type = "e2-medium"
-
 
   disk {
     auto_delete  = true
@@ -34,9 +34,9 @@ resource "google_compute_instance_template" "default" {
 resource "google_compute_instance_group_manager" "default" {
   name               = "flask-gm"
   base_instance_name = "flask-app"
-  region             = var.region
+  zone               = var.zone       # use zone here, NOT region
   version {
-    instance_template = google_compute_instance_template.default.id
+    instance_template = google_compute_instance_template.default.self_link
   }
   target_size = 2
 }
