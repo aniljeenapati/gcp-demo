@@ -20,15 +20,15 @@ resource "google_compute_instance_template" "default" {
   }
 
   metadata_startup_script = <<-EOF
-    #!/bin/bash
-    apt-get update
-    apt-get install -y python3-pip git
-    pip3 install flask
-    cd /home
-    git clone ${var.app_repo_url}
-    cd demo-repo
-    nohup python3 app.py --host=0.0.0.0 --port=80 &
-  EOF
+  #!/bin/bash
+  apt-get update
+  apt-get install -y python3-pip git
+  pip3 install flask
+  cd /home
+  git clone https://github.com/aniljeenapati/gcp-demo.git
+  cd gcp-demo
+  nohup python3 app.py --host=0.0.0.0 --port=80 &
+EOF
 }
 
 resource "google_compute_instance_group_manager" "default" {
