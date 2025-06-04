@@ -44,7 +44,7 @@ resource "google_compute_instance_group_manager" "default" {
 resource "google_compute_health_check" "default" {
   name = "flask-health-check"
   http_health_check {
-    port         = 5000
+    port         = 80
     request_path = "/"
   }
 }
