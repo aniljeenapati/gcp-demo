@@ -22,18 +22,18 @@ resource "google_compute_instance_template" "default" {
   metadata_startup_script = <<-EOF
   #!/bin/bash
   exec > /var/log/startup-script.log 2>&1
+  set -x
 
-  apt update
-  apt install -y python3-pip git
+  apt-get update -y
+  DEBIAN_FRONTEND=noninteractive apt-get install -y python3-pip git curl
 
-  cd /opt
-  git clone https://github.com/aniljeenapati/gcp-demo.git
-  cd gcp-demo
+  # Download the startup script from your GitHub repo
+  curl -sL https://raw.githubusercontent.com/aniljeenapati/gcp-demo/main/startup.sh -o /tmp/startup.sh
+  chmod +x /tmp/startup.sh
 
-  pip3 install flask
-
-  nohup python3 app.py --host=0.0.0.0 --port=80 &
-  EOF
+  # Run the downloaded startup script
+  /tmp/startup.sh
+EOF
 }
 
 resource "google_compute_instance_group_manager" "default" {
