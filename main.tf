@@ -21,12 +21,21 @@ resource "google_compute_instance_template" "default" {
 
   metadata_startup_script = <<-EOF
   #!/bin/bash
-  apt-get update
-  apt-get install -y python3-pip git
-  pip3 install flask
+  # Update package list
+  apt update
+
+  # Install Python and Git
+  apt install -y python3-pip git
+
+  # Clone your repo
   cd /home
   git clone https://github.com/aniljeenapati/gcp-demo.git
   cd gcp-demo
+
+  # Install Flask
+  pip3 install flask
+
+  # Run the Flask app on port 80
   nohup python3 app.py --host=0.0.0.0 --port=80 &
 EOF
 }
