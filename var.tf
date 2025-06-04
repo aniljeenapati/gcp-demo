@@ -15,9 +15,3 @@ variable "zone" {
   description = "GCP zone"
   default     = "us-central1-a"
 }
-
-variable "app_repo_url" {
-  type        = string
-  description = "GitHub URL of the Flask app"
-  default     = "https://github.com/aniljeenapati/gcp-demo.git"
-}
