@@ -48,6 +48,10 @@ resource "google_compute_instance_group_manager" "default" {
 
 resource "google_compute_health_check" "default" {
   name = "flask-health-check"
+  check_interval_sec  = 5
+  timeout_sec         = 5
+  healthy_threshold   = 2
+  unhealthy_threshold = 3
   http_health_check {
     port         = 80
     request_path = "/"
